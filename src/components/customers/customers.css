@@ -1,0 +1,196 @@
+/* Customers Page */
+.customers-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.customers-page__new-btn {
+  padding: 0.625rem 1.25rem;
+  background-color: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.customers-page__new-btn:hover {
+  opacity: 0.9;
+}
+
+.customers-page__error {
+  background: #fdecea;
+  color: #c0392b;
+  padding: 0.625rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.customers-page__loading {
+  color: var(--color-accent);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+}
+
+/* Customer List */
+.customer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.customer-list__empty {
+  color: var(--color-accent);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+}
+
+.customer-list__item {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px var(--color-shadow);
+  transition: box-shadow 0.2s;
+}
+
+.customer-list__item:hover {
+  box-shadow: 0 2px 8px var(--color-shadow);
+}
+
+.customer-list__button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.customer-list__name {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-content-text);
+}
+
+.customer-list__projects {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-accent);
+}
+
+.customer-list__delete {
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: #c0392b;
+  font-size: 1rem;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.customer-list__delete:hover {
+  opacity: 1;
+}
+
+/* Customer Form */
+.customer-form {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 12px var(--color-shadow);
+  max-width: 640px;
+}
+
+.customer-form__title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--color-content-text);
+  margin: 0 0 1.5rem;
+}
+
+.customer-form__field {
+  margin-bottom: 1rem;
+}
+
+.customer-form__field label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-content-text);
+  margin-bottom: 0.25rem;
+}
+
+.customer-form__field input,
+.customer-form__field textarea {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid #d4c5b0;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-content-text);
+  background: var(--color-content-bg);
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.customer-form__field input:focus,
+.customer-form__field textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.customer-form__actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.customer-form__submit {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.customer-form__submit:hover {
+  opacity: 0.9;
+}
+
+.customer-form__cancel {
+  padding: 0.75rem 1.5rem;
+  background: none;
+  border: 1px solid #d4c5b0;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-content-text);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.customer-form__cancel:hover {
+  border-color: var(--color-accent);
+}

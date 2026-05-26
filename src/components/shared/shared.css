@@ -1,0 +1,116 @@
+/* Shared UI Components */
+
+/* ErrorMessage */
+.shared-error {
+  background: #fdecea;
+  color: #c0392b;
+  padding: 0.625rem 0.75rem;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+/* LoadingSpinner */
+.shared-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-accent);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+}
+
+.shared-loading__spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid var(--color-accent);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: shared-spin 0.6s linear infinite;
+}
+
+@keyframes shared-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.shared-loading__text {
+  color: var(--color-accent);
+}
+
+/* ConfirmDialog */
+.shared-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.shared-dialog {
+  background: var(--color-content-bg);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 24px var(--color-shadow);
+  max-width: 400px;
+  width: 90%;
+}
+
+.shared-dialog__title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--color-content-text);
+  margin: 0 0 0.75rem;
+}
+
+.shared-dialog__message {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-content-text);
+  margin: 0 0 1.5rem;
+  line-height: 1.5;
+}
+
+.shared-dialog__actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.shared-dialog__cancel {
+  padding: 0.625rem 1.25rem;
+  background: none;
+  border: 1px solid #d4c5b0;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-content-text);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.shared-dialog__cancel:hover {
+  border-color: var(--color-accent);
+}
+
+.shared-dialog__confirm {
+  padding: 0.625rem 1.25rem;
+  background-color: #c0392b;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.shared-dialog__confirm:hover {
+  opacity: 0.9;
+}

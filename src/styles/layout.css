@@ -1,0 +1,34 @@
+/* WoodworX Layout Styles */
+
+/* Reset margin/padding on html and body */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* App shell: full-viewport flexbox layout */
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Navigation: fixed width, full viewport height */
+.app-shell__nav {
+  width: 230px;
+  min-width: 230px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  flex-shrink: 0;
+}
+
+/* Content area: fills remaining horizontal space */
+.app-shell__content {
+  flex: 1;
+  min-height: 100vh;
+  overflow-x: hidden;
+}

@@ -1,0 +1,135 @@
+/* Settings Page */
+.settings-page__header {
+  margin-bottom: 1.5rem;
+}
+
+.settings-page__loading {
+  color: var(--color-accent);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+}
+
+/* Settings Form */
+.settings-form {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 12px var(--color-shadow);
+  max-width: 540px;
+}
+
+.settings-form__title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--color-content-text);
+  margin: 0 0 1.5rem;
+}
+
+.settings-form__section {
+  margin-bottom: 1.5rem;
+}
+
+.settings-form__section-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-content-text);
+  margin-bottom: 0.75rem;
+}
+
+.settings-form__radio-group {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.settings-form__radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-content-text);
+  cursor: pointer;
+}
+
+.settings-form__radio-label input[type="radio"] {
+  accent-color: var(--color-accent);
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+/* Margins fieldset */
+.settings-form__fieldset {
+  border: 1px solid #d4c5b0;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 0 0 1.5rem;
+}
+
+.settings-form__fieldset legend {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-content-text);
+  padding: 0 0.5rem;
+}
+
+.settings-form__margins {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.settings-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.settings-form__field label {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-content-text);
+}
+
+.settings-form__field input[type="number"] {
+  width: 100%;
+  padding: 0.5rem 0.625rem;
+  border: 1px solid #d4c5b0;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-content-text);
+  background: var(--color-content-bg);
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.settings-form__field input[type="number"]:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.settings-form__actions {
+  margin-top: 1.5rem;
+}
+
+.settings-form__submit {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.settings-form__submit:hover {
+  opacity: 0.9;
+}
