@@ -38,6 +38,48 @@
   font-size: 0.9375rem;
 }
 
+/* Gallery Filter */
+.gallery-page__filter {
+  position: relative;
+  margin-bottom: 1rem;
+  max-width: 320px;
+}
+
+.gallery-page__filter-input {
+  width: 100%;
+  padding: 0.625rem 2.25rem 0.625rem 0.75rem;
+  border: 1px solid #d4c5b0;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-content-text);
+  background: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.gallery-page__filter-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.gallery-page__filter-clear {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.gallery-page__filter-clear:hover {
+  color: #c0392b;
+}
+
 /* Gallery Grid */
 .gallery-grid {
   display: grid;
