@@ -10,10 +10,20 @@ export function GalleryPage() {
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState<GalleryItem | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     fetchItems();
   }, [fetchItems]);
+
+  const filteredItems = filter.trim()
+    ? items.filter((item) => {
+        const search = filter.toLowerCase();
+        if (item.title.toLowerCase().includes(search)) return true;
+        if (item.tags.some((tag) => tag.toLowerCase().includes(search))) return true;
+        return false;
+      })
+    : items;
 
   const handleUpload = async (file: File | null, title: string, description: string, tags: string[]) => {
     if (editing) {
@@ -71,7 +81,32 @@ export function GalleryPage() {
       {showForm ? (
         <GalleryUpload item={editing} onUpload={handleUpload} onCancel={handleCancel} />
       ) : (
-        <GalleryGrid items={items} onSelect={handleSelect} onDelete={handleDeleteRequest} />
+        <>
+          <div className="gallery-page__filter">
+            <input
+              type="text"
+              className="gallery-page__filter-input"
+              placeholder="Filter by name or tag…"
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              aria-label="Filter gallery items"
+            />
+            {filter && (
+              <button
+                type="button"
+                className="gallery-page__filter-clear"
+                onClick={() => setFilter('')}
+                aria-label="Clear filter"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+          {filteredItems.length === 0 && items.length > 0 && (
+            <p className="gallery-grid__empty">No items match your filter.</p>
+          )}
+          <GalleryGrid items={filteredItems} onSelect={handleSelect} onDelete={handleDeleteRequest} />
+        </>
       )}
 
       {confirmDelete && (
