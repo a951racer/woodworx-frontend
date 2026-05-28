@@ -55,6 +55,13 @@ export function DesignList({ designs, onSelect, onDelete }: DesignListProps) {
                 ? design.description.slice(0, 80) + (design.description.length > 80 ? '…' : '')
                 : 'No description'}
             </span>
+            {design.tags && design.tags.length > 0 && (
+              <span className="design-list__tags">
+                {design.tags.map((tag) => (
+                  <span key={tag} className="design-list__tag">{tag}</span>
+                ))}
+              </span>
+            )}
           </button>
           <button
             type="button"

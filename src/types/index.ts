@@ -31,6 +31,7 @@ export interface Design {
   materials: MaterialItem[];
   boards: Board[];
   notes: string;
+  tags: string[];
   thumbnailFileId?: string;
   createdAt: string;
   updatedAt: string;
