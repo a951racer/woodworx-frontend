@@ -1,20 +1,26 @@
 import { useState } from 'react';
+import type { GalleryItem } from '../../types';
+import { getGalleryFileUrl } from '../../api/gallery.api';
 
 interface GalleryUploadProps {
-  onUpload: (file: File, title: string, description: string, tags: string[]) => Promise<void>;
+  item?: GalleryItem | null;
+  onUpload: (file: File | null, title: string, description: string, tags: string[]) => Promise<void>;
   onCancel: () => void;
 }
 
-export function GalleryUpload({ onUpload, onCancel }: GalleryUploadProps) {
+export function GalleryUpload({ item, onUpload, onCancel }: GalleryUploadProps) {
   const [file, setFile] = useState<File | null>(null);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [tagsInput, setTagsInput] = useState('');
+  const [title, setTitle] = useState(item?.title || '');
+  const [description, setDescription] = useState(item?.description || '');
+  const [tagsInput, setTagsInput] = useState(item?.tags?.join(', ') || '');
   const [submitting, setSubmitting] = useState(false);
+
+  const isEditing = !!item;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file || !title.trim()) return;
+    if (!isEditing && !file) return;
+    if (!title.trim()) return;
 
     const tags = tagsInput
       .split(',')
@@ -28,16 +34,26 @@ export function GalleryUpload({ onUpload, onCancel }: GalleryUploadProps) {
 
   return (
     <form className="gallery-upload" onSubmit={handleSubmit}>
-      <h2 className="gallery-upload__title">Upload Image</h2>
+      <h2 className="gallery-upload__title">{isEditing ? 'Edit Image' : 'Upload Image'}</h2>
+
+      {isEditing && item?.fileKey && (
+        <div className="gallery-upload__preview">
+          <img
+            src={getGalleryFileUrl(item._id)}
+            alt={item.title}
+            className="gallery-upload__preview-img"
+          />
+        </div>
+      )}
 
       <div className="gallery-upload__field">
-        <label htmlFor="gallery-file">File</label>
+        <label htmlFor="gallery-file">{isEditing ? 'Replace File (optional)' : 'File'}</label>
         <input
           id="gallery-file"
           type="file"
           accept="image/*"
           onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-          required
+          required={!isEditing}
         />
       </div>
 
@@ -79,9 +95,9 @@ export function GalleryUpload({ onUpload, onCancel }: GalleryUploadProps) {
         <button
           type="submit"
           className="gallery-upload__submit"
-          disabled={submitting || !file || !title.trim()}
+          disabled={submitting || (!isEditing && !file) || !title.trim()}
         >
-          {submitting ? 'Uploading…' : 'Upload'}
+          {submitting ? 'Saving…' : isEditing ? 'Save' : 'Upload'}
         </button>
         <button
           type="button"

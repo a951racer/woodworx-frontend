@@ -31,6 +31,23 @@ export async function remove(id: string): Promise<void> {
   await client.delete(`/gallery/${id}`);
 }
 
+export async function update(
+  id: string,
+  file: File | null,
+  title: string,
+  description: string,
+  tags: string[]
+): Promise<GalleryItem> {
+  const formData = new FormData();
+  if (file) formData.append('file', file);
+  formData.append('title', title);
+  formData.append('description', description);
+  formData.append('tags', JSON.stringify(tags));
+
+  const response = await client.put<GalleryItem>(`/gallery/${id}`, formData);
+  return response.data;
+}
+
 export function getGalleryFileUrl(galleryItemId: string): string {
   const baseURL = client.defaults.baseURL || '/api';
   const token = localStorage.getItem('woodworx_token');

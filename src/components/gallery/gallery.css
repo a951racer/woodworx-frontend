@@ -233,3 +233,91 @@
 .gallery-upload__cancel:hover {
   border-color: var(--color-accent);
 }
+
+/* Gallery Grid Select Button */
+.gallery-grid__select {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+/* Gallery Upload Preview */
+.gallery-upload__preview {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.gallery-upload__preview-img {
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Confirm Delete Dialog */
+.gallery-page__confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.gallery-page__confirm-dialog {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  max-width: 360px;
+  text-align: center;
+}
+
+.gallery-page__confirm-dialog p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-content-text);
+  margin: 0 0 1.5rem;
+}
+
+.gallery-page__confirm-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.gallery-page__confirm-delete {
+  padding: 0.625rem 1.25rem;
+  background: #c0392b;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.gallery-page__confirm-delete:hover {
+  opacity: 0.9;
+}
+
+.gallery-page__confirm-cancel {
+  padding: 0.625rem 1.25rem;
+  background: none;
+  border: 1px solid #d4c5b0;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-content-text);
+  cursor: pointer;
+}
+
+.gallery-page__confirm-cancel:hover {
+  border-color: var(--color-accent);
+}

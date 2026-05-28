@@ -8,6 +8,7 @@ export interface GalleryStore {
   error: string | null;
   fetchItems: () => Promise<void>;
   uploadItem: (file: File, title: string, description: string, tags: string[]) => Promise<void>;
+  updateItem: (id: string, file: File | null, title: string, description: string, tags: string[]) => Promise<void>;
   deleteItem: (id: string) => Promise<void>;
 }
 
@@ -34,6 +35,17 @@ export const useGalleryStore = create<GalleryStore>((set, get) => ({
       set({ items: [...get().items, item] });
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Failed to upload gallery item';
+      set({ error: message });
+    }
+  },
+
+  updateItem: async (id: string, file: File | null, title: string, description: string, tags: string[]) => {
+    set({ error: null });
+    try {
+      const updated = await galleryApi.update(id, file, title, description, tags);
+      set({ items: get().items.map((item) => (item._id === id ? updated : item)) });
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to update gallery item';
       set({ error: message });
     }
   },
