@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import type { Design, CreateDesignDTO, MaterialItem } from '../../types';
 import { getThumbnailUrl } from '../../api/designs.api';
 import { useDesignStore } from '../../stores/designStore';
+import { TagChipInput } from '../shared/TagChipInput';
+import '../shared/shared.css';
 
 interface DesignFormProps {
   design?: Design | null;
@@ -20,6 +22,7 @@ export function DesignForm({ design, onSubmit, onCancel }: DesignFormProps) {
   const [unit, setUnit] = useState<'imperial' | 'metric'>('imperial');
   const [materials, setMaterials] = useState<MaterialItem[]>([]);
   const [notes, setNotes] = useState('');
+  const [tags, setTags] = useState<string[]>([]);
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
   const [thumbnailPreviewUrl, setThumbnailPreviewUrl] = useState<string | null>(null);
   const [thumbnailError, setThumbnailError] = useState<string | null>(null);
@@ -37,6 +40,7 @@ export function DesignForm({ design, onSubmit, onCancel }: DesignFormProps) {
       setUnit(design.dimensions.unit);
       setMaterials(design.materials.length > 0 ? design.materials : []);
       setNotes(design.notes);
+      setTags(design.tags || []);
       setThumbnailPreviewUrl(
         design.thumbnailFileId ? getThumbnailUrl(design._id) : null
       );
@@ -49,6 +53,7 @@ export function DesignForm({ design, onSubmit, onCancel }: DesignFormProps) {
       setUnit('imperial');
       setMaterials([]);
       setNotes('');
+      setTags([]);
       setThumbnailPreviewUrl(null);
     }
     setThumbnailFile(null);
@@ -84,6 +89,7 @@ export function DesignForm({ design, onSubmit, onCancel }: DesignFormProps) {
       materials,
       boards: design?.boards ?? [],
       notes,
+      tags,
     };
 
     const designId = await onSubmit(data);
@@ -233,6 +239,11 @@ export function DesignForm({ design, onSubmit, onCancel }: DesignFormProps) {
           onChange={(e) => setNotes(e.target.value)}
           rows={4}
         />
+      </div>
+
+      <div className="design-form__field">
+        <label>Tags</label>
+        <TagChipInput tags={tags} onChange={setTags} placeholder="Add a tag and press Enter…" />
       </div>
 
       <div className="design-form__field">
