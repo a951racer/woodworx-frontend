@@ -69,7 +69,11 @@ export interface Customer {
   name: string;
   email?: string;
   phone?: string;
-  address?: string;
+  streetLine1?: string;
+  streetLine2?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
   notes: string;
   projects?: Project[];
   createdAt: string;
