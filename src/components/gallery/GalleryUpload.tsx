@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import type { GalleryItem } from '../../types';
 import { getGalleryFileUrl } from '../../api/gallery.api';
+import { TagChipInput } from '../shared/TagChipInput';
+import '../shared/shared.css';
 
 interface GalleryUploadProps {
   item?: GalleryItem | null;
@@ -12,7 +14,7 @@ export function GalleryUpload({ item, onUpload, onCancel }: GalleryUploadProps) 
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState(item?.title || '');
   const [description, setDescription] = useState(item?.description || '');
-  const [tagsInput, setTagsInput] = useState(item?.tags?.join(', ') || '');
+  const [tags, setTags] = useState<string[]>(item?.tags || []);
   const [submitting, setSubmitting] = useState(false);
 
   const isEditing = !!item;
@@ -21,11 +23,6 @@ export function GalleryUpload({ item, onUpload, onCancel }: GalleryUploadProps) 
     e.preventDefault();
     if (!isEditing && !file) return;
     if (!title.trim()) return;
-
-    const tags = tagsInput
-      .split(',')
-      .map((t) => t.trim())
-      .filter((t) => t.length > 0);
 
     setSubmitting(true);
     await onUpload(file, title.trim(), description.trim(), tags);
@@ -81,14 +78,8 @@ export function GalleryUpload({ item, onUpload, onCancel }: GalleryUploadProps) 
       </div>
 
       <div className="gallery-upload__field">
-        <label htmlFor="gallery-tags">Tags (comma-separated)</label>
-        <input
-          id="gallery-tags"
-          type="text"
-          value={tagsInput}
-          onChange={(e) => setTagsInput(e.target.value)}
-          placeholder="e.g. walnut, table, commission"
-        />
+        <label>Tags</label>
+        <TagChipInput tags={tags} onChange={setTags} placeholder="Add a tag and press Enter…" />
       </div>
 
       <div className="gallery-upload__actions">
