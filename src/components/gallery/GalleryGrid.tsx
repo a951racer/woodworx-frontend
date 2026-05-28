@@ -3,6 +3,7 @@ import { getGalleryFileUrl } from '../../api/gallery.api';
 
 interface GalleryGridProps {
   items: GalleryItem[];
+  onSelect: (item: GalleryItem) => void;
   onDelete: (id: string) => void;
 }
 
@@ -26,7 +27,7 @@ function normalizeTags(tags: string[]): string[] {
   return tags.map((tag) => tag.replace(/[\[\]"]/g, '').trim()).filter((t) => t.length > 0);
 }
 
-export function GalleryGrid({ items, onDelete }: GalleryGridProps) {
+export function GalleryGrid({ items, onSelect, onDelete }: GalleryGridProps) {
   if (items.length === 0) {
     return <p className="gallery-grid__empty">No gallery items yet. Upload your first image!</p>;
   }
@@ -35,23 +36,30 @@ export function GalleryGrid({ items, onDelete }: GalleryGridProps) {
     <div className="gallery-grid">
       {items.map((item) => (
         <div key={item._id} className="gallery-grid__item">
-          <div className="gallery-grid__thumbnail">
-            <img src={getGalleryFileUrl(item._id)} alt={item.title} className="gallery-grid__image" />
-          </div>
-          <div className="gallery-grid__info">
-            <span className="gallery-grid__title">{item.title}</span>
-            {item.tags.length > 0 && (
-              <div className="gallery-grid__tags">
-                {normalizeTags(item.tags).map((tag) => (
-                  <span key={tag} className="gallery-grid__tag">{tag}</span>
-                ))}
-              </div>
-            )}
-          </div>
+          <button
+            type="button"
+            className="gallery-grid__select"
+            onClick={() => onSelect(item)}
+            aria-label={`Edit ${item.title}`}
+          >
+            <div className="gallery-grid__thumbnail">
+              <img src={getGalleryFileUrl(item._id)} alt={item.title} className="gallery-grid__image" />
+            </div>
+            <div className="gallery-grid__info">
+              <span className="gallery-grid__title">{item.title}</span>
+              {item.tags.length > 0 && (
+                <div className="gallery-grid__tags">
+                  {normalizeTags(item.tags).map((tag) => (
+                    <span key={tag} className="gallery-grid__tag">{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </button>
           <button
             type="button"
             className="gallery-grid__delete"
-            onClick={() => onDelete(item._id)}
+            onClick={(e) => { e.stopPropagation(); onDelete(item._id); }}
             aria-label={`Delete ${item.title}`}
           >
             ✕
