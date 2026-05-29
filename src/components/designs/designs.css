@@ -333,3 +333,27 @@
   font-size: 0.8125rem;
   margin: 0.25rem 0 0;
 }
+
+/* Design List Hover Preview Popup */
+.design-list__preview-popup {
+  position: fixed;
+  width: 640px;
+  height: 640px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  box-sizing: border-box;
+  z-index: 200;
+  pointer-events: none;
+}
+
+.design-list__preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
