@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { Project, CreateProjectDTO } from '../../types';
+import { useDesignStore } from '../../stores/designStore';
+import { useCustomerStore } from '../../stores/customerStore';
 
 interface ProjectFormProps {
   project?: Project | null;
@@ -22,6 +24,16 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
   const [startDate, setStartDate] = useState('');
   const [completedDate, setCompletedDate] = useState('');
   const [notes, setNotes] = useState('');
+
+  const designs = useDesignStore((s) => s.designs);
+  const fetchDesigns = useDesignStore((s) => s.fetchDesigns);
+  const customers = useCustomerStore((s) => s.customers);
+  const fetchCustomers = useCustomerStore((s) => s.fetchCustomers);
+
+  useEffect(() => {
+    fetchDesigns();
+    fetchCustomers();
+  }, [fetchDesigns, fetchCustomers]);
 
   useEffect(() => {
     if (project) {
@@ -75,27 +87,33 @@ export function ProjectForm({ project, onSubmit, onCancel }: ProjectFormProps) {
       </div>
 
       <div className="project-form__field">
-        <label htmlFor="project-designId">Design ID</label>
-        <input
-          id="project-designId"
-          type="text"
+        <label htmlFor="project-design">Design</label>
+        <select
+          id="project-design"
           value={designId}
           onChange={(e) => setDesignId(e.target.value)}
           required
-          placeholder="Enter design ID"
-        />
+        >
+          <option value="">Select a design...</option>
+          {designs.map((d) => (
+            <option key={d._id} value={d._id}>{d.name}</option>
+          ))}
+        </select>
       </div>
 
       <div className="project-form__field">
-        <label htmlFor="project-customerId">Customer ID</label>
-        <input
-          id="project-customerId"
-          type="text"
+        <label htmlFor="project-customer">Customer</label>
+        <select
+          id="project-customer"
           value={customerId}
           onChange={(e) => setCustomerId(e.target.value)}
           required
-          placeholder="Enter customer ID"
-        />
+        >
+          <option value="">Select a customer...</option>
+          {customers.map((c) => (
+            <option key={c._id} value={c._id}>{c.name}</option>
+          ))}
+        </select>
       </div>
 
       <div className="project-form__field">
