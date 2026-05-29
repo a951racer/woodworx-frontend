@@ -151,7 +151,7 @@
   border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 2px 12px var(--color-shadow);
-  max-width: 640px;
+  max-width: 900px;
 }
 
 .design-form__title {
@@ -427,4 +427,8 @@
 
 .design-form__boards-table td {
   color: var(--color-content-text);
+}
+
+.design-form__boards-table-wrapper {
+  overflow-x: auto;
 }

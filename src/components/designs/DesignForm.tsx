@@ -333,8 +333,13 @@ export function DesignForm({ design, onSubmit, onCancel }: DesignFormProps) {
           </div>
           {importMessage && <p className="design-form__import-success">{importMessage}</p>}
           {importError && <p className="design-form__import-error">{importError}</p>}
+        </fieldset>
+      )}
 
-          {design.boards && design.boards.length > 0 && (
+      {design && design.boards && design.boards.length > 0 && (
+        <fieldset className="design-form__fieldset">
+          <legend>Board List ({design.boards.length} boards)</legend>
+          <div className="design-form__boards-table-wrapper">
             <table className="design-form__boards-table">
               <thead>
                 <tr>
@@ -361,7 +366,7 @@ export function DesignForm({ design, onSubmit, onCancel }: DesignFormProps) {
                 ))}
               </tbody>
             </table>
-          )}
+          </div>
         </fieldset>
       )}
 

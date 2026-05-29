@@ -16,6 +16,16 @@ export function DesignsPage() {
     fetchDesigns();
   }, [fetchDesigns]);
 
+  // Keep editing state in sync with store (e.g., after board import updates the design)
+  useEffect(() => {
+    if (editing) {
+      const updated = designs.find((d) => d._id === editing._id);
+      if (updated && updated !== editing) {
+        setEditing(updated);
+      }
+    }
+  }, [designs, editing]);
+
   const handleCreate = () => {
     setEditing(null);
     setShowForm(true);

@@ -1,4 +1,6 @@
 import type { Project } from '../../types';
+import { useCustomerStore } from '../../stores/customerStore';
+import { useEffect } from 'react';
 
 interface ProjectListProps {
   projects: Project[];
@@ -14,6 +16,17 @@ const statusLabels: Record<Project['status'], string> = {
 };
 
 export function ProjectList({ projects, onSelect, onDelete }: ProjectListProps) {
+  const customers = useCustomerStore((s) => s.customers);
+  const fetchCustomers = useCustomerStore((s) => s.fetchCustomers);
+
+  useEffect(() => {
+    fetchCustomers();
+  }, [fetchCustomers]);
+
+  function getCustomerName(customerId: string): string {
+    const customer = customers.find((c) => c._id === customerId);
+    return customer ? customer.name : customerId;
+  }
   if (projects.length === 0) {
     return <p className="project-list__empty">No projects yet. Create your first project to get started.</p>;
   }
@@ -34,7 +47,7 @@ export function ProjectList({ projects, onSelect, onDelete }: ProjectListProps) 
                 {statusLabels[project.status]}
               </span>
               <span className="project-list__customer">
-                Customer: {project.customerId}
+                Customer: {getCustomerName(project.customerId)}
               </span>
             </span>
           </button>
