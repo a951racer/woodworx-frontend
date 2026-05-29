@@ -38,3 +38,10 @@ export function getThumbnailUrl(designId: string): string {
   const url = `${baseURL}/designs/${designId}/thumbnail`;
   return token ? `${url}?token=${encodeURIComponent(token)}` : url;
 }
+
+export async function importBoardsCsv(designId: string, file: File): Promise<Design> {
+  const formData = new FormData();
+  formData.append('file', file);
+  const response = await client.post<Design>(`/designs/${designId}/boards/import`, formData);
+  return response.data;
+}

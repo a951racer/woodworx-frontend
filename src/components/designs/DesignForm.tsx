@@ -29,8 +29,12 @@ export function DesignForm({ design, onSubmit, onCancel }: DesignFormProps) {
   const [thumbnailError, setThumbnailError] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [galleryItemId, setGalleryItemId] = useState<string>('');
+  const [csvFile, setCsvFile] = useState<File | null>(null);
+  const [importMessage, setImportMessage] = useState<string | null>(null);
+  const [importError, setImportError] = useState<string | null>(null);
 
   const uploadThumbnail = useDesignStore((state) => state.uploadThumbnail);
+  const importBoardsAction = useDesignStore((state) => state.importBoards);
   const galleryItems = useGalleryStore((state) => state.items);
   const fetchGalleryItems = useGalleryStore((state) => state.fetchItems);
 
@@ -294,6 +298,77 @@ export function DesignForm({ design, onSubmit, onCancel }: DesignFormProps) {
         )}
         {isUploading && <p className="design-form__thumbnail-uploading">Uploading…</p>}
       </div>
+
+      {design && (
+        <fieldset className="design-form__fieldset">
+          <legend>Boards (CSV Import)</legend>
+          <p className="design-form__helper-text">
+            CSV columns: Part name, Quantity, Thickness, Width, Length, Material
+          </p>
+          <div className="design-form__csv-row">
+            <input
+              type="file"
+              accept=".csv,text/csv"
+              onChange={(e) => { setCsvFile(e.target.files?.[0] ?? null); setImportMessage(null); setImportError(null); }}
+            />
+            <button
+              type="button"
+              className="design-form__import-btn"
+              disabled={!csvFile}
+              onClick={async () => {
+                if (!csvFile || !design) return;
+                setImportMessage(null);
+                setImportError(null);
+                const result = await importBoardsAction(design._id, csvFile);
+                if (result) {
+                  setImportMessage(`Imported ${result.boards.length} boards`);
+                  setCsvFile(null);
+                } else {
+                  setImportError('Import failed. Check CSV format.');
+                }
+              }}
+            >
+              Import
+            </button>
+          </div>
+          {importMessage && <p className="design-form__import-success">{importMessage}</p>}
+          {importError && <p className="design-form__import-error">{importError}</p>}
+        </fieldset>
+      )}
+
+      {design && design.boards && design.boards.length > 0 && (
+        <fieldset className="design-form__fieldset">
+          <legend>Board List ({design.boards.length} boards)</legend>
+          <div className="design-form__boards-table-wrapper">
+            <table className="design-form__boards-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Material</th>
+                  <th>Type</th>
+                  <th>Thickness</th>
+                  <th>Width</th>
+                  <th>Length</th>
+                  <th>Qty</th>
+                </tr>
+              </thead>
+              <tbody>
+                {design.boards.map((board, i) => (
+                  <tr key={i}>
+                    <td>{board.name}</td>
+                    <td>{board.material}</td>
+                    <td>{board.materialType}</td>
+                    <td>{board.thickness}</td>
+                    <td>{board.width}</td>
+                    <td>{board.length}</td>
+                    <td>{board.quantity}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </fieldset>
+      )}
 
       <div className="design-form__actions">
         <button type="submit" className="design-form__submit">

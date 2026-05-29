@@ -11,6 +11,7 @@ export interface DesignStore {
   updateDesign: (id: string, data: UpdateDesignDTO) => Promise<string | undefined>;
   deleteDesign: (id: string) => Promise<void>;
   uploadThumbnail: (id: string, file: File) => Promise<void>;
+  importBoards: (id: string, file: File) => Promise<Design | undefined>;
 }
 
 export const useDesignStore = create<DesignStore>((set, get) => ({
@@ -78,6 +79,21 @@ export const useDesignStore = create<DesignStore>((set, get) => ({
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Failed to upload thumbnail';
       set({ error: message });
+    }
+  },
+
+  importBoards: async (id: string, file: File) => {
+    set({ error: null });
+    try {
+      const updated = await designsApi.importBoardsCsv(id, file);
+      set({
+        designs: get().designs.map((d) => (d._id === id ? updated : d)),
+      });
+      return updated;
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to import boards';
+      set({ error: message });
+      return undefined;
     }
   },
 }));

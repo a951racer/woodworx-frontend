@@ -10,7 +10,10 @@ export interface MaterialItem {
 }
 
 export interface Board {
+  name: string;
   species: string;
+  material: string;
+  materialType: 'Solid Wood' | 'Sheet Good' | 'Hardware';
   length: number;
   width: number;
   thickness: number;
