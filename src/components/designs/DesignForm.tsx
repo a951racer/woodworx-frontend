@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import type { Design, CreateDesignDTO, MaterialItem } from '../../types';
 import { getThumbnailUrl } from '../../api/designs.api';
 import { useDesignStore } from '../../stores/designStore';
+import { useGalleryStore } from '../../stores/galleryStore';
 import { TagChipInput } from '../shared/TagChipInput';
 import '../shared/shared.css';
 
@@ -27,8 +28,15 @@ export function DesignForm({ design, onSubmit, onCancel }: DesignFormProps) {
   const [thumbnailPreviewUrl, setThumbnailPreviewUrl] = useState<string | null>(null);
   const [thumbnailError, setThumbnailError] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [galleryItemId, setGalleryItemId] = useState<string>('');
 
   const uploadThumbnail = useDesignStore((state) => state.uploadThumbnail);
+  const galleryItems = useGalleryStore((state) => state.items);
+  const fetchGalleryItems = useGalleryStore((state) => state.fetchItems);
+
+  useEffect(() => {
+    fetchGalleryItems();
+  }, [fetchGalleryItems]);
 
   useEffect(() => {
     if (design) {
@@ -41,6 +49,7 @@ export function DesignForm({ design, onSubmit, onCancel }: DesignFormProps) {
       setMaterials(design.materials.length > 0 ? design.materials : []);
       setNotes(design.notes);
       setTags(design.tags || []);
+      setGalleryItemId(design.galleryItemId || '');
       setThumbnailPreviewUrl(
         design.thumbnailFileId ? getThumbnailUrl(design._id) : null
       );
@@ -54,6 +63,7 @@ export function DesignForm({ design, onSubmit, onCancel }: DesignFormProps) {
       setMaterials([]);
       setNotes('');
       setTags([]);
+      setGalleryItemId('');
       setThumbnailPreviewUrl(null);
     }
     setThumbnailFile(null);
@@ -90,6 +100,7 @@ export function DesignForm({ design, onSubmit, onCancel }: DesignFormProps) {
       boards: design?.boards ?? [],
       notes,
       tags,
+      galleryItemId: galleryItemId || undefined,
     };
 
     const designId = await onSubmit(data);
@@ -244,6 +255,20 @@ export function DesignForm({ design, onSubmit, onCancel }: DesignFormProps) {
       <div className="design-form__field">
         <label>Tags</label>
         <TagChipInput tags={tags} onChange={setTags} placeholder="Add a tag and press Enter…" />
+      </div>
+
+      <div className="design-form__field">
+        <label htmlFor="design-gallery-item">Gallery Item</label>
+        <select
+          id="design-gallery-item"
+          value={galleryItemId}
+          onChange={(e) => setGalleryItemId(e.target.value)}
+        >
+          <option value="">None</option>
+          {galleryItems.map((item) => (
+            <option key={item._id} value={item._id}>{item.title}</option>
+          ))}
+        </select>
       </div>
 
       <div className="design-form__field">

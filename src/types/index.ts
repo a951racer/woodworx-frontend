@@ -32,6 +32,7 @@ export interface Design {
   boards: Board[];
   notes: string;
   tags: string[];
+  galleryItemId?: string;
   thumbnailFileId?: string;
   createdAt: string;
   updatedAt: string;
